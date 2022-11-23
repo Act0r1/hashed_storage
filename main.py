@@ -1,16 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query, Path
+from pydantic import BaseModel
+from typing import List
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
     return {"message:":"Hello world"}
-
-
-
-
-
-@app.get("/items/{item_id}")
-async def read_user_item(item_id: str, needy: str):
-    item = {"item_id": item_id, "needy": needy}
-    return item
