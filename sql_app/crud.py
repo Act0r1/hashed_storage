@@ -6,9 +6,9 @@ from . import auth
 
 
 
-def create_user(db:Session,user:schema.UserCreate):
-    hash_passw = auth.get_password_hash(user.password) 
-    db_user = models.User(username=user.username, hashed_password=hash_passw)
+def create_user(db:Session,user:schema.UserCreate, salt:str):
+    hash_passw = auth.get_password_hash(user.password + salt) 
+    db_user = models.User(username=user.username, hashed_password=hash_passw, salt=salt)
     # we don't return password hash back to front
     user.dict().pop('password')
     db.add(db_user)

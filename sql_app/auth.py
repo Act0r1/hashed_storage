@@ -21,7 +21,7 @@ PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def token_response(token:str):
     return {
-        "acces_token": token
+        "access_token": token
     }
 
 
