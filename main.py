@@ -1,8 +1,10 @@
 import hashlib
+import logging
+import os
 from misc.gen_salt import generate_random_salt
 from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
-from fastapi import  UploadFile
+from fastapi import UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -13,7 +15,7 @@ from sql_app import crud
 from sql_app.models import User
 
 
-
+BLOCK_SIZE = 65536
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
@@ -83,12 +85,25 @@ async def login(
 async def uploadfile(file: UploadFile):
     asd = file.file.read()
     # hashing name
+    file_hash = hashlib.sha256()
     with open("asd.pdf", "wb") as f:
         f.write(asd)
 
-    with open("asd.pdf", "rb") as f:
-        grr = hashlib.file_digest(f, "sha256")
-        print("hash of file ->", grr)
+
+    with open("asd.pdf", "rb") as f:  # Open the file to read it's bytes
+        fb = f.read(BLOCK_SIZE)  # Read from the file. Take in the amount declared above
+        while len(fb) > 0:  # While there is still data being read from the file
+            file_hash.update(fb)  # Update the hash
+            fb = f.read(BLOCK_SIZE)
+    hash_of_file = file_hash.hexdigest()
+    cwd = os.getcwd()
+    end_path = cwd + f"/store/{hash_of_file[:2]}"
+    if not os.path.isdir(end_path):
+        os.makedirs(end_path)
+     
+
+     
+
 
 
 
