@@ -11,7 +11,7 @@ class UserInDb(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str
+    username: str | None = None
 
 
 class User(BaseModel):

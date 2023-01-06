@@ -19,8 +19,5 @@ class File(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
-    # path = Column(String, index=True)
+    path = Column(String, index=True)
     owner = relationship("User", back_populates="files")
-    # optional, maybe don't use
-    def __repr__(self) -> str:
-        return "File name %s" % self.name
