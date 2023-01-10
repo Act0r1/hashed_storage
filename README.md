@@ -20,5 +20,5 @@ You'll see this:
 
 After that, you should signup, after that authorize. And that's it, now you can upload and delete files. For upload file, just open, click button "Try it
 out" and select your files. 
-
-###IMPORTANT: don't load same files two times, I'm not processing this error right now!
+ 
+### IMPORTANT: don't load same files two times, I'm not processing this error right now!
