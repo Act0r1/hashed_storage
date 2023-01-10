@@ -33,6 +33,8 @@ class UserOut(BaseModel):
 
 class File(BaseModel):
     name: str
+    owner: str
+    path: str
 
     class Confing:
         orm_mode = True

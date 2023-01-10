@@ -1,25 +1,31 @@
 import os
 import hashlib
+import os
 
-from ..sql_app import auth
+from sql_app import auth
 from fastapi import UploadFile, Depends
-from ..sql_app.schema import Token
-from ..sql_app.models import User
+from sql_app.models import User
 
 
 BLOCK_SIZE = 65536
 
-async def create_working_dir(file:UploadFile, user:User = Depends(auth.get_current_active_user)):
+
+async def create_working_dir(
+    file: UploadFile, user: User = Depends(auth.get_current_active_user)
+):
     file_hash = hashlib.sha256()
     cwd = os.getcwd()
 
+    # creating dir files
+    if not os.path.isdir(f"{cwd}/files"):
+        os.makedirs(f"{cwd}/files")
     # creating dir with username if this one doesn't exist
     if not os.path.isdir(f"{cwd}/files/{user.username}"):
         os.makedirs(f"{cwd}/files/{user.username}")
 
     # creating file in dir
     with open(f"{cwd}/files/{user.username}/{file.filename}", "wb") as f:
-        f.write(file.file.read())
+        f.write(await file.read())
 
     # hashing content
     with open(f"{cwd}/files/{user.username}/{file.filename}", "rb") as f:
@@ -34,8 +40,5 @@ async def create_working_dir(file:UploadFile, user:User = Depends(auth.get_curre
     ):
         os.makedirs(end_path)
 
-    print("name of file", file.content_type)
-
-
-
-
+    with open(f"{end_path}/{hash_of_file}", "w"):
+        pass

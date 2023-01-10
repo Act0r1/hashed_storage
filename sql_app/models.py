@@ -1,5 +1,4 @@
-from sqlalchemy import  Column,ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String
 
 from .database import Base
 
@@ -11,13 +10,12 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String, nullable=False)
     salt = Column(String)
-    files = relationship("File", back_populates="owner")
+
 
 class File(Base):
-    __tablename__="files"
+    __tablename__ = "files"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    name = Column(String, unique=True)
     path = Column(String, index=True)
-    owner = relationship("User", back_populates="files")
+    owner = Column(String) 
