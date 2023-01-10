@@ -22,3 +22,9 @@ After that, you should signup, after that authorize. And that's it, now you can 
 out" and select your files. 
  
 ### IMPORTANT: don't load same files two times, I'm not processing this error right now!
+
+Don't forget add SQLALCHEMY_DATABASE_URL, SECRET_KEY, and ALGO in your .env. 
+
+In my case I use ALGO=HS256. For generating SECRET_KEY you can use command `openssl rand -hex 32`. 
+
+SQLALCHEMY_DATABASE_URL format this one `postgresql://user:password@localhost:port/db_name`
